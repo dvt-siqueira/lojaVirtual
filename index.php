@@ -24,5 +24,6 @@
         }
         ?>
        </p>
+       <a href="admin/produtos/cadastrar.php">Cadastrar Produto</a>
     </body>
 </html>
