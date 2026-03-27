@@ -14,9 +14,10 @@
             $nome = $_POST["nome"];
             $preco = $_POST["preco"];
             $descricao = $_POST["descricao"];
+            $quantidade= $_POST["quantidade"];
 
-            $sql = "INSERT INTO produtos (nome, preco, descricao)
-            VALUES (:nome, :preco, :descricao)";
+            $sql = "INSERT INTO produtos (nome, preco, descricao,quantidade)
+            VALUES (:nome, :preco, :descricao, :quantidade)";
             $stmt = $pdo->prepare($sql);
 
             //Executa a comando usando os dados do formulário
@@ -24,9 +25,10 @@
                 $stmt->execute([
                     ':nome' => $nome,
                     ':preco' => $preco,
-                    ':descricao' => $descricao
+                    ':descricao' => $descricao,
+                    ':quantidade'=> $quantidade
                 ]);
-                $mensagem = "Produto '$nome' salvo com sucesso!";
+                $mensagem = "Produto '$nome' salvo com sucessosss!";
             } catch (PDOException $e) {
                 $mensagem = "Erro ao salvar o produto: " . $e->getMessage();
             }
