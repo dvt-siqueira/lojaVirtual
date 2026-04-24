@@ -25,22 +25,68 @@
 </head>
 
 <body>
+    <fieldset>
+        <legend>Filtros de Busca</legend>
+        <form method="get" action="listar.php">
+            <input type="text" name="busca" placeholder="Buscar por nome..."
+                value="<?php echo $_GET['busca'] ?? ''; ?>">
+            <select name="preco_max">
+                <option value="">Selecione o preço máximo</option>
+                <option value="50" 
+                <?php echo (isset($_GET['preco_max']) && $_GET['preco_max'] == '50') 
+                ? 'selected' : ''; ?>
+                >Até R$ 50,00</option>
+                <option value="100"
+                <?php echo (isset($_GET['preco_max']) && $_GET['preco_max'] == '100') 
+                ? 'selected' : ''; ?>>Até R$ 100,00</option>
+                <option value="200"
+                <?php echo (isset($_GET['preco_max']) && $_GET['preco_max'] == '200') 
+                ? 'selected' : ''; ?>>Até R$ 200,00</option>
+            </select>
+
+            <button type="submit">Buscar</button>
+            <a href="listar.php" class="btn">Limpar Filtros</a>
+        </form>
+
+    </fieldset>
+
+
+
     <div class=container>
         <h1>Lista de Produtos</h1>
         <?php
         require_once '../../config.php';
+         $busca = $_GET['busca'] ?? '';
+         $preco_max = $_GET['preco_max'] ?? '';
         try {
-            $sql = "SELECT id, nome, preco, quantidade FROM produtos order by nome asc";
-            $stmt = $pdo->query($sql);
+            
+            $sql = "SELECT id, nome, preco, quantidade FROM produtos WHERE 1=1";
+            $params = [];
+
+            if (!empty($busca)) {
+                $sql .= " AND nome LIKE :busca";
+                $params[':busca'] = "%$busca%";
+            }
+             if (!empty($preco_max)) {
+                $sql .= " AND preco <= :preco_max";
+                $params[':preco_max'] = $preco_max;
+            }
+
+            $sql .= " ORDER BY nome ASC";
+
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($params);
             $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
         } catch (PDOException $e) {
             die("Erro ao listar produtos: " . $e->getMessage());
         }
 
 
+
         if (!empty($produtos)) {
             echo "<table>";
-            echo "<thead><tr><th>ID</th><th>Nome</th><th>Preço</th><th>Estoque</th></tr></thead>";
+            echo "<thead><tr><th>ID</th><th>Nome</th><th>Preço</th><th>Estoque</th><th>Ações</th></tr></thead>";
             echo "<tbody>";
             foreach ($produtos as $p) {
                 echo "<tr>";
