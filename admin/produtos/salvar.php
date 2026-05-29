@@ -3,7 +3,6 @@
     <link rel="stylesheet" href="../../css/style.css">
     <Title>Produto Salvo</Title>
 </head>
-
 <body>
     <div class="container">
         <h1 id="sucesso">Produto Salvo com Sucesso!</h1>
@@ -14,19 +13,19 @@
             $nome = $_POST["nome"];
             $preco = $_POST["preco"];
             $descricao = $_POST["descricao"];
-
-            $sql = "INSERT INTO produtos (nome, preco, descricao)
-            VALUES (:nome, :preco, :descricao)";
+            $quantidade= $_POST["quantidade"];
+            $sql = "INSERT INTO produtos (nome, preco, descricao,quantidade)
+            VALUES (:nome, :preco, :descricao, :quantidade)";
             $stmt = $pdo->prepare($sql);
-
             //Executa a comando usando os dados do formulário
             try {
                 $stmt->execute([
                     ':nome' => $nome,
                     ':preco' => $preco,
-                    ':descricao' => $descricao
+                    ':descricao' => $descricao,
+                    ':quantidade'=> $quantidade
                 ]);
-                $mensagem = "Produto '$nome' salvo com sucesso!";
+                $mensagem = "Produto '$nome' salvo com sucessosss!";
             } catch (PDOException $e) {
                 $mensagem = "Erro ao salvar o produto: " . $e->getMessage();
             }
@@ -34,7 +33,5 @@
         ?>
         <h1><?php echo $mensagem; ?></h1>
     </div>
-
-
 </body>
 </html>

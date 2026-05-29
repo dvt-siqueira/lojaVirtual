@@ -13,7 +13,6 @@ $options=[
 try{
     //cria a conexao com o banco de dados usando PDO
     $pdo= new PDO($dsn, $username, $password, $options);
-    echo "Conexão bem-sucedida!";
 }catch(PDOException $e){
     //trata erros de conexão
     die("Erro de conexão: " . $e->getMessage());
