@@ -64,3 +64,13 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+.frm-usuario {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* distância entre todos os elementos */
+}

@@ -87,6 +87,15 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); co
     margin-top: 40px;
     text-align: center;
 }
+.frm-usuario {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* distância entre todos os elementos */
+}
 
 /* FORMS */
 .form-container {
