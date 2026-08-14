@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../../config.php';
-
+session_start();
 function buscarProdutos($pdo, $busca = '')
 {
 
@@ -81,8 +81,14 @@ function exibirNavbar()
 
             <nav class="main-nav">
                 <ul>
-                    <li><a href="<?php echo $basePath; ?>index.php">Início</a></li>
-                    <li><a href="<?php echo $basePath; ?>admin/produtos/listar.php" class="btn-admin">Admin</a></li>
+                    <?php
+                    if (isset($_SESSION['usuario_id'])): ?>
+                       <li><a href="<?php echo $basePath; ?>admin/produtos/listar.php" class="btn-admin">Admin</a></li>
+                        <li><a href="<?php echo $basePath; ?>logout.php">Logout</a></li>
+                    <?php else: ?>
+                         <li> <a href="<?php echo $basePath; ?>login.php">Login</a></li>
+                        
+                    <?php endif; ?>
                 </ul>
             </nav>
         </div>

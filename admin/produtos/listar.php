@@ -1,5 +1,10 @@
 <?php
 require_once 'functions.php';
+if(!isset($_SESSION['usuario_id'])) {
+    header("Location: ../../login.php?erro=restrito");
+    exit();
+}
+print_r($_SESSION);
 
 $busca = $_GET['busca'] ?? '';
 $preco_max = $_GET['preco_max'] ?? '';
