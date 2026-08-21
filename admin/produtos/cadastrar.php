@@ -1,5 +1,12 @@
 <?php
 require_once 'functions.php';
+
+if(!isset($_SESSION['usuario_id'])) {
+    header("Location: ../../login.php?erro=restrito");
+    exit();
+}
+print_r($_SESSION);
+
 exibirCabecalho("Cadastrar Novo Produto - Admin");
 exibirNavbar();
 ?>

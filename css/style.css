@@ -61,8 +61,16 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); co
     justify-content: center; 
     font-size: 3.5rem; 
     color: #cbd5e1; 
+    overflow: hidden; /* Evita que imagens maiores saiam do container */
 }
 
+/* Regra adicionada para ajustar a imagem */
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ajusta a foto proporcionalmente sem distorcer */
+    object-position: center;
+}
 .product-info { padding: 20px; flex-grow: 1; text-align: center; }
 .product-info h3 { font-size: 1.1rem; margin-bottom: 10px; color: var(--dark); }
 .price { font-size: 1.4rem; font-weight: 800; color: var(--success); }

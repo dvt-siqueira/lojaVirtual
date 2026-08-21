@@ -1,6 +1,13 @@
 <?php
 require_once 'functions.php';
 
+if(!isset($_SESSION['usuario_id'])) {
+    header("Location: ../../login.php?erro=restrito");
+    exit();
+}
+print_r($_SESSION);
+
+
 // Buscar os dados atuais do produto para preencher o formulário
 if (isset($_GET['id'])) {
     $id = $_GET['id'];

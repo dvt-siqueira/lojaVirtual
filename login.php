@@ -13,8 +13,11 @@ exibirNavbar();
     <form class=" frm-usuario" method="POST" action="controllers/processar_login.php">
     <input type="email" name="email" placeholder="Email" required class="form-control mb-2">
     <input type="password" name="senha" placeholder="Senha" required class="form-control mb-2">
+    
     <button type="submit" class="btn btn-primary">Login</button>
-    </form>
+    <a href="cadastro_usuario.php" class="btn btn-secondary">Criar Conta</a>
+
+</form>
 </div>
 <?php
 exibirRodape();

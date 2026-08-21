@@ -102,7 +102,19 @@ function exibirCardProduto($p)
 {
 ?>
     <div class="product-card">
-        <div class="product-image"><i class="fa-solid fa-image"></i></div>
+        <div class="product-image">
+        <?php 
+        $caminho_imagem = 'assets/img/produtos/' . $p['foto'];
+
+        // Verifica se o campo não está vazio e se o arquivo realmente existe na pasta
+        if (!empty($p['foto']) && file_exists($caminho_imagem)): 
+        ?>
+            <img src="<?php echo htmlspecialchars($caminho_imagem); ?>" alt="<?php echo htmlspecialchars($p['nome']); ?>">
+        <?php else: ?>
+            <!-- Ícone padrão de fallback caso a imagem não seja encontrada -->
+            <i class="fa-solid fa-image"></i>
+        <?php endif; ?>
+    </div>
         <div class="product-info">
             <h3><?php echo htmlspecialchars($p['nome']); ?></h3>
             <p class="price">
