@@ -47,29 +47,25 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); co
     box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
 }
 
-.product-card:hover { 
-    transform: translateY(-5px); 
-    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); 
-    border-color: var(--primary); /* A moldura brilha no hover */
+.product-image {
+    height: 180px;
+    background: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
 
-.product-image { 
-    height: 180px; 
-    background: #f1f5f9; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    font-size: 3.5rem; 
-    color: #cbd5e1; 
-    overflow: hidden; /* Evita que imagens maiores saiam do container */
-}
-
-/* Regra adicionada para ajustar a imagem */
 .product-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ajusta a foto proporcionalmente sem distorcer */
-    object-position: center;
+    object-fit: contain;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 .product-info { padding: 20px; flex-grow: 1; text-align: center; }
 .product-info h3 { font-size: 1.1rem; margin-bottom: 10px; color: var(--dark); }

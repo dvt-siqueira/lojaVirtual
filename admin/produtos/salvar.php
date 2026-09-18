@@ -21,7 +21,7 @@
 
             // 1. Tenta realizar o upload da imagem
             if (isset($_FILES['foto']) && $p->fazerUpload($_FILES['foto'])) {
-                $foto = $p->foto; // Nome gerado pelo método fazerUpload()
+                $foto = $p->getImagem(); // Nome gerado pelo método fazerUpload()
 
                 // 2. Prepara a query SQL com os Named Parameters
                 $sql = "INSERT INTO produtos (nome, preco, descricao, quantidade, foto)
@@ -51,6 +51,7 @@
         ?>
 
         <h1><?php echo $mensagem; ?></h1>
+         <?php header("Location: listar.php?{$mensagem};"); ?>
     </div>
 </body>
 </html>
