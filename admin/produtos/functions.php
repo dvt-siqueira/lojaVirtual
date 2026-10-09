@@ -1,6 +1,11 @@
 <?php
 require_once __DIR__ . '/../../config.php';
-session_start();
+require_once __DIR__ . '/../../controllers/CarrinhoController.php';
+
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 function buscarProdutos($pdo, $busca = '')
 {
 
@@ -61,6 +66,9 @@ function exibirRodape()
 
 function exibirNavbar()
 {
+    $controller = new CarrinhoController();
+    $dados = $controller->obterDadosView();
+
     if (str_contains($_SERVER['PHP_SELF'], '/admin/')) {
         $basePath = '../../';
     } elseif (str_contains($_SERVER['PHP_SELF'], '/models/')) {
@@ -83,12 +91,20 @@ function exibirNavbar()
                 <ul>
                     <?php
                     if (isset($_SESSION['usuario_id'])): ?>
-                       <li><a href="<?php echo $basePath; ?>admin/produtos/listar.php" class="btn-admin">Admin</a></li>
+                        <li><a href="<?php echo $basePath; ?>admin/produtos/listar.php" class="btn-admin">Admin</a></li>
                         <li><a href="<?php echo $basePath; ?>logout.php">Logout</a></li>
                     <?php else: ?>
-                         <li> <a href="<?php echo $basePath; ?>login.php">Login</a></li>
-                        
+                        <li> <a href="<?php echo $basePath; ?>login.php">Login</a></li>
+
                     <?php endif; ?>
+                    <li class="carrinho">
+                        <a href="<?php echo $basePath; ?>carrinhoVitrine.php">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <span class="carrinho-badge">
+                                <?php echo $dados['quantidadeTotal']; ?>
+                            </span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -100,29 +116,36 @@ function exibirNavbar()
  */
 function exibirCardProduto($p)
 {
+    if (str_contains($_SERVER['PHP_SELF'], '/admin/')) {
+        $basePath = '../../';
+    } else {
+        $basePath = '';
+    }
 ?>
     <div class="product-card">
         <div class="product-image">
-        <?php 
-        $caminho_imagem = 'assets/img/produtos/' . $p['foto'];
+            <?php
+            $caminho_imagem = $basePath . 'assets/img/produtos/' . $p['foto'];
 
-        // Verifica se o campo não está vazio e se o arquivo realmente existe na pasta
-        if (!empty($p['foto']) && file_exists($caminho_imagem)): 
-        ?>
-            <img src="<?php echo htmlspecialchars($caminho_imagem); ?>" alt="<?php echo htmlspecialchars($p['nome']); ?>">
-        <?php else: ?>
-            <!-- Ícone padrão de fallback caso a imagem não seja encontrada -->
-            <i class="fa-solid fa-image"></i>
-        <?php endif; ?>
-    </div>
+            if (!empty($p['foto']) && file_exists($caminho_imagem)):
+            ?>
+                <img src="<?php echo htmlspecialchars($caminho_imagem); ?>" alt="<?php echo htmlspecialchars($p['nome']); ?>">
+            <?php else: ?>
+                <i class="fa-solid fa-image"></i>
+            <?php endif; ?>
+        </div>
         <div class="product-info">
             <h3><?php echo htmlspecialchars($p['nome']); ?></h3>
             <p class="price">
                 R$ <?php echo number_format($p['preco'], 2, ',', '.'); ?>
             </p>
-            <button class="btn-buy">Comprar</button>
+
+            <!-- Formulário enviando para carrinho.php -->
+            <form method="POST" action="<?php echo $basePath; ?>carrinhoVitrine.php?acao=adicionar">
+                <input type="hidden" name="produto_id" value="<?php echo $p['id']; ?>">
+                <button type="submit" class="btn-buy">Comprar</button>
+            </form>
         </div>
     </div>
 <?php
 }
-?>
